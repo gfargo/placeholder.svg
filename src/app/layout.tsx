@@ -1,5 +1,6 @@
 import { Chivo } from "next/font/google";
 import { Rubik } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
 import { cn } from "@/lib/utils";
 
 const fontHeading = Chivo({
@@ -34,6 +35,7 @@ export default function RootLayout({
       className={cn("antialiased", fontHeading.variable, fontBody.variable)}
     >
       <body>{children}</body>
+      <Analytics />
     </html>
   );
 }
