@@ -19,6 +19,7 @@ import {
 } from "./utils";
 import { useEffect, useState } from "react";
 import { DownloadIcon } from "@radix-ui/react-icons";
+import Image from "next/image";
 
 export function PlaceholderGenerator() {
   const [backgroundImageBase64, setBackgroundImageBase64] = useState<
@@ -350,10 +351,10 @@ export function PlaceholderGenerator() {
                 </span>
               </div>
             )}
-            <img
+            <Image
               src={base64Svg}
-              width={"100%"}
-              height={"auto"}
+              width={svgProps.width}
+              height={svgProps.height}
               alt="Placeholder"
               className="rounded-md"
             />
