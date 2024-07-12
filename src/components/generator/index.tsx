@@ -299,7 +299,13 @@ export function PlaceholderGenerator() {
               </label>
               {backgroundImageBase64 ? (
                 <Button
-                  onClick={() => setBackgroundImageBase64(null)}
+                  onClick={() => {
+                    setBackgroundImageBase64(null);
+                    setSvgProps((prevProps) => ({
+                      ...prevProps,
+                      backgroundImageBase64: undefined,
+                    }));
+                  }}
                   className="w-full"
                 >
                   Remove
