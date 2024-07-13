@@ -17,7 +17,7 @@ import {
   generateSvgHtml,
   svgToBase64,
 } from "./utils";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { DownloadIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
 
@@ -68,21 +68,6 @@ export function PlaceholderGenerator() {
       }
     }
   };
-
-  useEffect(() => {
-    setIsGenerating(true);
-
-    generateSvgHtml(svgProps)
-      .then((html) => {
-        setSvgHtml(html);
-        setBase64Svg(svgToBase64(html));
-      })
-      .catch((error) => {
-        console.error("Error generating SVG:", error);
-      });
-
-    setIsGenerating(false);
-  }, [svgProps]);
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center">
@@ -322,7 +307,22 @@ export function PlaceholderGenerator() {
             </div>
           </form>
           <div className="mt-6 flex justify-center">
-            <Button onClick={() => downloadSvg(svgHtml)} className="w-full">
+            <Button
+              onClick={() => {
+                setIsGenerating(true);
+
+                generateSvgHtml(svgProps)
+                  .then((html) => {
+                    setSvgHtml(html);
+                    setBase64Svg(svgToBase64(html));
+                    setIsGenerating(false);
+                  })
+                  .catch((error) => {
+                    console.error("Error generating SVG:", error);
+                  });
+              }}
+              className="w-full"
+            >
               Generate
             </Button>
           </div>
