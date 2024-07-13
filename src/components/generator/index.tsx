@@ -17,25 +17,28 @@ import {
   generateSvgHtml,
   svgToBase64,
 } from "./utils";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { DownloadIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
+
+const DEFAULT_SVG_PROPS: SvgProperties = {
+  width: 540,
+  height: 280,
+  backgroundColor: "#f0f0f0",
+  overlayText: "Placeholder",
+  overlayTextColor: "#15162c",
+  overlayTextAlignment: "center",
+  fontSize: 13,
+  fontWeight: "bold",
+  fontFamily: "monospace",
+};
 
 export function PlaceholderGenerator() {
   const [backgroundImageBase64, setBackgroundImageBase64] = useState<
     string | null
   >(null);
-  const [svgProps, setSvgProps] = useState<SvgProperties>({
-    width: 540,
-    height: 280,
-    backgroundColor: "#f0f0f0",
-    overlayText: "Placeholder",
-    overlayTextColor: "#15162c",
-    overlayTextAlignment: "center",
-    fontSize: 13,
-    fontWeight: "bold",
-    fontFamily: "monospace",
-  });
+
+  const [svgProps, setSvgProps] = useState<SvgProperties>(DEFAULT_SVG_PROPS);
   const [svgHtml, setSvgHtml] = useState<string>("");
   const [base64Svg, setBase64Svg] = useState<string>("");
   const [isGenerating, setIsGenerating] = useState<boolean>(true);
@@ -50,6 +53,19 @@ export function PlaceholderGenerator() {
       [id]: value,
     }));
   };
+
+  const generateSvg = useCallback(() => {
+    setIsGenerating(true);
+    generateSvgHtml(svgProps)
+      .then((html) => {
+        setSvgHtml(html);
+        setBase64Svg(svgToBase64(html));
+        setIsGenerating(false);
+      })
+      .catch((error) => {
+        console.error("Error generating SVG:", error);
+      });
+  }, [svgProps]);
 
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -68,6 +84,10 @@ export function PlaceholderGenerator() {
       }
     }
   };
+
+  useEffect(() => {
+    generateSvg();
+  }, [generateSvg]);
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center">
@@ -307,22 +327,7 @@ export function PlaceholderGenerator() {
             </div>
           </form>
           <div className="mt-6 flex justify-center">
-            <Button
-              onClick={() => {
-                setIsGenerating(true);
-
-                generateSvgHtml(svgProps)
-                  .then((html) => {
-                    setSvgHtml(html);
-                    setBase64Svg(svgToBase64(html));
-                    setIsGenerating(false);
-                  })
-                  .catch((error) => {
-                    console.error("Error generating SVG:", error);
-                  });
-              }}
-              className="w-full"
-            >
+            <Button onClick={() => generateSvg()} className="w-full">
               Generate
             </Button>
           </div>
