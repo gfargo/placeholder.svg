@@ -43,7 +43,9 @@ const calculateCoverDimensions = (
   return { width, height, x, y };
 };
 
-export const generateSvgHtml = async (props: SvgProperties): Promise<string> => {
+export const generateSvgHtml = async (
+  props: SvgProperties,
+): Promise<string> => {
   const {
     height,
     width,
@@ -66,7 +68,7 @@ export const generateSvgHtml = async (props: SvgProperties): Promise<string> => 
   let svgContent = `<svg viewBox="0 0 ${width} ${height}" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">${patternSvg ? "<defs>" : ""}${patternSvg}${patternSvg ? "</defs>" : ""}
       <rect width="100%" height="100%" fill="${backgroundColor}" />`;
 
-  if (backgroundPattern) {
+  if (backgroundPattern && backgroundPattern !== "none") {
     svgContent += `<rect width="100%" height="100%" fill="url(#${backgroundPattern})" />`;
   }
 

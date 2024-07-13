@@ -29,10 +29,10 @@ export function PlaceholderGenerator() {
     width: 540,
     height: 280,
     backgroundColor: "#f0f0f0",
-    overlayText: "Hello World",
+    overlayText: "Placeholder",
     overlayTextColor: "#15162c",
     overlayTextAlignment: "center",
-    fontSize: 12,
+    fontSize: 13,
     fontWeight: "bold",
     fontFamily: "monospace",
   });
