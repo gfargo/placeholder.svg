@@ -34,8 +34,10 @@ export default function RootLayout({
       lang="en"
       className={cn("antialiased", fontHeading.variable, fontBody.variable)}
     >
-      <body>{children}</body>
-      <Analytics />
+      <body>
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
