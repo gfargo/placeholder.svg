@@ -94,7 +94,7 @@ export function PlaceholderGenerator() {
       <div className="flex w-full max-w-6xl gap-6 p-6">
         <div className="w-full rounded-lg bg-card p-6 shadow-lg">
           <div className="mb-6">
-            <h1 className="mb-2 text-2xl font-bold">Placeholder.svg</h1>
+            <h1 className="mb-2 font-mono text-3xl">{`/`}Placeholder.svg</h1>
             <p className="text-muted-foreground">
               Generate custom SVG placeholders with various options and
               settings.
@@ -368,20 +368,25 @@ export function PlaceholderGenerator() {
               className="rounded-md"
             />
           </div>
-          <Textarea
-            placeholder="HTML Output"
-            rows={4}
-            className="rounded-md bg-muted px-3 py-2 text-sm"
-            value={svgHtml}
-            readOnly
-          />
-          <Textarea
-            placeholder="Base64 Output"
-            rows={4}
-            className="rounded-md bg-muted px-3 py-2 text-sm"
-            value={base64Svg}
-            readOnly
-          />
+          <div>
+            <h4 className="text-sm font-medium">HTML</h4>
+            <Textarea
+              placeholder="HTML Output"
+              rows={4}
+              className="rounded-md bg-muted px-3 py-2 text-sm"
+              value={svgHtml}
+            />
+          </div>
+          <div>
+            <h4 className="text-sm font-medium">Base64</h4>
+            <Textarea
+              placeholder="Base64 Output"
+              rows={4}
+              className="rounded-md bg-muted px-3 py-2 text-sm"
+              value={base64Svg}
+              readOnly
+            />
+          </div>
         </div>
       </div>
     </div>
