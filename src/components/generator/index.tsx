@@ -94,7 +94,7 @@ export function PlaceholderGenerator() {
   }, [isDirty]);
 
   return (
-    <div className="flex min-h-screen w-full flex-col items-center justify-center">
+    <div className="flex w-full flex-col items-center justify-center">
       <div className="flex w-full max-w-6xl flex-col gap-6 p-3 md:p-6 md:flex-row">
         <div className="w-full rounded-lg bg-card p-4 md:p-6 shadow-lg">
           <div className="mb-6">

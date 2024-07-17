@@ -36,7 +36,7 @@ export default function RootLayout({
       lang="en"
       className={cn("antialiased", fontHeading.variable, fontBody.variable)}
     >
-      <body>
+      <body className="flex min-h-screen flex-col">
         {children}
         <Footer />
         <Toaster />
