@@ -11,17 +11,16 @@ import {
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { type SvgProperties } from "./types";
-import {
-  downloadSvg,
-  fileToBase64,
-  generateSvgHtml,
-  svgToBase64,
-} from "./utils";
+import { generateSvgHtml } from "./utils/generateSvgHtml";
+import { downloadSvg } from "./utils/downloadSvg";
+import { svgToBase64 } from "./utils/svgToBase64";
+import { fileToBase64 } from "./utils/fileToBase64";
 import { useCallback, useEffect, useState } from "react";
 import { DownloadIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
 import { CopyButton } from "../CopyButton";
 import { cn } from "@/lib/utils";
+import { svgPatterns } from "./constants";
 
 const DEFAULT_SVG_PROPS: SvgProperties = {
   width: 540,
@@ -92,7 +91,7 @@ export function PlaceholderGenerator() {
 
   useEffect(() => {
     generateSvg();
-  }, []);
+  }, [isDirty]);
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center">
@@ -196,12 +195,13 @@ export function PlaceholderGenerator() {
               </label>
               <Select
                 value={svgProps.fontWeight}
-                onValueChange={(value) =>
+                onValueChange={(value) => {
                   setSvgProps((prevProps) => ({
                     ...prevProps,
                     fontWeight: value as SvgProperties["fontWeight"],
-                  }))
-                }
+                  }));
+                  setIsDirty(true);
+                }}
               >
                 <SelectTrigger className="rounded-md bg-muted px-3 py-2 text-sm">
                   <SelectValue placeholder="Select" />
@@ -220,12 +220,13 @@ export function PlaceholderGenerator() {
               </label>
               <Select
                 value={svgProps.fontFamily}
-                onValueChange={(value) =>
+                onValueChange={(value) => {
                   setSvgProps((prevProps) => ({
                     ...prevProps,
                     fontFamily: value,
-                  }))
-                }
+                  }));
+                  setIsDirty(true);
+                }}
               >
                 <SelectTrigger className="rounded-md bg-muted px-3 py-2 text-sm">
                   <SelectValue placeholder="Select" />
@@ -246,12 +247,13 @@ export function PlaceholderGenerator() {
               </label>
               <Select
                 value={svgProps.overlayTextAlignment}
-                onValueChange={(value) =>
+                onValueChange={(value) => {
                   setSvgProps((prevProps) => ({
                     ...prevProps,
                     overlayTextAlignment: value as "left" | "center" | "right",
-                  }))
-                }
+                  }));
+                  setIsDirty(true);
+                }}
               >
                 <SelectTrigger className="rounded-md bg-muted px-3 py-2 text-sm">
                   <SelectValue placeholder="Select" />
@@ -272,7 +274,7 @@ export function PlaceholderGenerator() {
               </label>
               <Select
                 value={svgProps.backgroundPattern}
-                onValueChange={(value) =>
+                onValueChange={(value) => {
                   setSvgProps((prevProps) => ({
                     ...prevProps,
                     backgroundPattern: value as
@@ -282,19 +284,22 @@ export function PlaceholderGenerator() {
                       | "pattern3"
                       | "pattern4"
                       | "pattern5",
-                  }))
-                }
+                  }));
+                  setIsDirty(true);
+                }}
               >
                 <SelectTrigger className="rounded-md bg-muted px-3 py-2 text-sm">
                   <SelectValue placeholder="Select" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="none">None</SelectItem>
-                  <SelectItem value="pattern1">Dots</SelectItem>
-                  <SelectItem value="pattern2">Lines</SelectItem>
-                  <SelectItem value="pattern3">Grid</SelectItem>
-                  <SelectItem value="pattern4">4</SelectItem>
-                  <SelectItem value="pattern5">5</SelectItem>
+                  {Object.entries(svgPatterns)
+                    .sort()
+                    .map(([key, value]) => (
+                      <SelectItem key={key} value={key} className="capitalize">
+                        {key}
+                      </SelectItem>
+                    ))}
                 </SelectContent>
               </Select>
             </div>
@@ -313,6 +318,7 @@ export function PlaceholderGenerator() {
                       ...prevProps,
                       backgroundImageBase64: undefined,
                     }));
+                    setIsDirty(true);
                   }}
                   className="w-full"
                 >
@@ -342,7 +348,11 @@ export function PlaceholderGenerator() {
               Generate
             </Button>
             <Button
-              onClick={() => setSvgProps(DEFAULT_SVG_PROPS)}
+              onClick={() => {
+                setSvgProps(DEFAULT_SVG_PROPS);
+                setBackgroundImageBase64(null);
+                setIsDirty(false);
+              }}
               className=""
               variant="outline"
               disabled={

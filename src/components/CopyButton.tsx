@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, ButtonProps } from "@/components/ui/button";
+import { Button, type ButtonProps } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
 import { ClipboardCopyIcon } from "@radix-ui/react-icons";
