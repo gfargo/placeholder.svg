@@ -94,9 +94,9 @@ export function PlaceholderGenerator() {
   }, [isDirty]);
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center">
-      <div className="flex w-full max-w-6xl gap-6 p-6">
-        <div className="w-full rounded-lg bg-card p-6 shadow-lg">
+    <div className="flex min-h-screen w-full flex-col items-center justify-center">
+      <div className="flex w-full max-w-6xl flex-col gap-6 p-3 md:p-6 md:flex-row">
+        <div className="w-full rounded-lg bg-card p-4 md:p-6 shadow-lg">
           <div className="mb-6">
             <h1 className="mb-2 font-mono text-3xl">{`/`}Placeholder.svg</h1>
             <p className="text-muted-foreground">
@@ -364,12 +364,12 @@ export function PlaceholderGenerator() {
           </div>
         </div>
         <div className="flex max-h-screen w-full flex-col gap-4">
-          <div className="flex justify-end">
-            <Button onClick={() => downloadSvg(svgHtml)}>
+          <div className="flex md:justify-end order-1">
+            <Button onClick={() => downloadSvg(svgHtml)} className="w-full md:w-auto">
               <DownloadIcon className="h-4 w-4" />
             </Button>
           </div>
-          <div className="border-color-[#f0f0f0] relative flex aspect-video min-h-[380px] w-full justify-center rounded-md border p-4">
+          <div className="border-color-[#f0f0f0] relative -order-1 flex aspect-video min-h-[200px] w-full justify-center rounded-md border p-4 md:order-1 md:min-h-[380px]">
             {isGenerating && (
               <div className="absolute inset-0 flex items-center justify-center bg-card">
                 <span className="flex items-center gap-2 text-muted-foreground">
@@ -401,7 +401,7 @@ export function PlaceholderGenerator() {
               className="rounded-md"
             />
           </div>
-          <div>
+          <div className="order-3">
             <h4 className="text-sm font-medium">HTML</h4>
             <div className="relative rounded-md border bg-muted text-sm">
               <CopyButton
@@ -417,7 +417,7 @@ export function PlaceholderGenerator() {
               />
             </div>
           </div>
-          <div>
+          <div className="order-4">
             <h4 className="text-sm font-medium">Base64</h4>
             <div className="relative rounded-md border bg-muted text-sm">
               <CopyButton
