@@ -352,6 +352,7 @@ export function PlaceholderGenerator() {
                 setSvgProps(DEFAULT_SVG_PROPS);
                 setBackgroundImageBase64(null);
                 setIsDirty(false);
+                generateSvg();
               }}
               className=""
               variant="outline"
