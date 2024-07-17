@@ -20,6 +20,8 @@ import {
 import { useCallback, useEffect, useState } from "react";
 import { DownloadIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
+import { CopyButton } from "../CopyButton";
+import { cn } from "@/lib/utils";
 
 const DEFAULT_SVG_PROPS: SvgProperties = {
   width: 540,
@@ -41,6 +43,7 @@ export function PlaceholderGenerator() {
   const [svgProps, setSvgProps] = useState<SvgProperties>(DEFAULT_SVG_PROPS);
   const [svgHtml, setSvgHtml] = useState<string>("");
   const [base64Svg, setBase64Svg] = useState<string>("");
+  const [isDirty, setIsDirty] = useState<boolean>(false);
   const [isGenerating, setIsGenerating] = useState<boolean>(true);
 
   const handleChange = (
@@ -52,6 +55,7 @@ export function PlaceholderGenerator() {
       ...prevProps,
       [id]: value,
     }));
+    setIsDirty(true);
   };
 
   const generateSvg = useCallback(() => {
@@ -61,6 +65,7 @@ export function PlaceholderGenerator() {
         setSvgHtml(html);
         setBase64Svg(svgToBase64(html));
         setIsGenerating(false);
+        setIsDirty(false);
       })
       .catch((error) => {
         console.error("Error generating SVG:", error);
@@ -87,7 +92,7 @@ export function PlaceholderGenerator() {
 
   useEffect(() => {
     generateSvg();
-  }, [generateSvg]);
+  }, []);
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center">
@@ -324,9 +329,27 @@ export function PlaceholderGenerator() {
               )}
             </div>
           </form>
-          <div className="mt-6 flex justify-center">
-            <Button onClick={() => generateSvg()} className="w-full">
+          <div
+            className={cn("mt-6 flex justify-center gap-3", {
+              "animate-pulse": isDirty,
+            })}
+          >
+            <Button
+              onClick={() => generateSvg()}
+              className="w-full"
+              disabled={!isDirty}
+            >
               Generate
+            </Button>
+            <Button
+              onClick={() => setSvgProps(DEFAULT_SVG_PROPS)}
+              className=""
+              variant="outline"
+              disabled={
+                JSON.stringify(svgProps) === JSON.stringify(DEFAULT_SVG_PROPS)
+              }
+            >
+              Reset
             </Button>
           </div>
         </div>
@@ -370,22 +393,36 @@ export function PlaceholderGenerator() {
           </div>
           <div>
             <h4 className="text-sm font-medium">HTML</h4>
-            <Textarea
-              placeholder="HTML Output"
-              rows={4}
-              className="rounded-md bg-muted px-3 py-2 text-sm"
-              value={svgHtml}
-            />
+            <div className="relative rounded-md border bg-muted text-sm">
+              <CopyButton
+                label="HTML"
+                value={svgHtml}
+                className="absolute right-1 top-1"
+              />
+              <Textarea
+                placeholder="HTML Output"
+                rows={4}
+                className="overflow-auto rounded-md border-none bg-muted p-2 font-mono text-xs"
+                value={svgHtml}
+              />
+            </div>
           </div>
           <div>
             <h4 className="text-sm font-medium">Base64</h4>
-            <Textarea
-              placeholder="Base64 Output"
-              rows={4}
-              className="rounded-md bg-muted px-3 py-2 text-sm"
-              value={base64Svg}
-              readOnly
-            />
+            <div className="relative rounded-md border bg-muted text-sm">
+              <CopyButton
+                label="Base64"
+                value={base64Svg}
+                className="absolute right-1 top-1"
+              />
+              <Textarea
+                placeholder="Base64 Output"
+                rows={4}
+                className="overflow-auto rounded-md border-none bg-muted p-2 font-mono text-xs"
+                value={base64Svg}
+                readOnly
+              />
+            </div>
           </div>
         </div>
       </div>
