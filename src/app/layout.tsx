@@ -19,6 +19,7 @@ import "@/styles/globals.css";
 
 import { type Metadata } from "next";
 import { Toaster } from "@/components/ui/toaster";
+import { Footer } from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Placeholder.svg",
@@ -37,6 +38,7 @@ export default function RootLayout({
     >
       <body>
         {children}
+        <Footer />
         <Toaster />
         <Analytics />
       </body>
