@@ -95,8 +95,8 @@ export function PlaceholderGenerator() {
 
   return (
     <div className="flex w-full flex-col items-center justify-center">
-      <div className="flex w-full max-w-6xl flex-col gap-6 p-3 md:p-6 md:flex-row">
-        <div className="w-full rounded-lg bg-card p-4 md:p-6 shadow-lg">
+      <div className="flex w-full max-w-6xl flex-col gap-6 p-3 md:flex-row md:p-6">
+        <div className="w-full rounded-lg bg-card p-4 shadow-lg md:p-6">
           <div className="mb-6">
             <h1 className="mb-2 font-mono text-3xl">{`/`}Placeholder.svg</h1>
             <p className="text-muted-foreground">
@@ -294,8 +294,8 @@ export function PlaceholderGenerator() {
                 <SelectContent>
                   <SelectItem value="none">None</SelectItem>
                   {Object.entries(svgPatterns)
-                    .sort()
-                    .map(([key, value]) => (
+                    .sort((a, b) => a[0].localeCompare(b[0]))
+                    .map(([key, _value]) => (
                       <SelectItem key={key} value={key} className="capitalize">
                         {key}
                       </SelectItem>
@@ -365,8 +365,11 @@ export function PlaceholderGenerator() {
           </div>
         </div>
         <div className="flex max-h-screen w-full flex-col gap-4">
-          <div className="flex md:justify-end order-1">
-            <Button onClick={() => downloadSvg(svgHtml)} className="w-full md:w-auto">
+          <div className="order-1 flex md:justify-end">
+            <Button
+              onClick={() => downloadSvg(svgHtml)}
+              className="w-full md:w-auto"
+            >
               <DownloadIcon className="h-4 w-4" />
             </Button>
           </div>
@@ -374,23 +377,21 @@ export function PlaceholderGenerator() {
             {isGenerating && (
               <div className="absolute inset-0 flex items-center justify-center bg-card">
                 <span className="flex items-center gap-2 text-muted-foreground">
-                  <span>
-                    <svg
-                      className="h-5 w-5 animate-spin"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                      />
-                    </svg>
-                  </span>
-                  Generating...
+                  <svg
+                    className="h-5 w-5 animate-spin"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                    />
+                  </svg>
+                  <span>Generating...</span>
                 </span>
               </div>
             )}
