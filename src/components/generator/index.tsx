@@ -422,6 +422,7 @@ export function PlaceholderGenerator() {
                 rows={4}
                 className="overflow-auto rounded-md border-none bg-muted p-2 font-mono text-xs"
                 value={svgHtml}
+                readOnly
               />
             </div>
           </div>
