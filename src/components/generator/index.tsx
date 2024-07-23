@@ -21,6 +21,8 @@ import Image from "next/image";
 import { CopyButton } from "../CopyButton";
 import { cn } from "@/lib/utils";
 import { svgPatterns } from "./constants";
+import { getRandomPlaceholder } from "./utils/getRandomPlaceholder";
+import { getRandomSvgPattern } from "./utils/getRandomSvgPattern";
 
 const DEFAULT_SVG_PROPS: SvgProperties = {
   width: 540,
@@ -29,7 +31,7 @@ const DEFAULT_SVG_PROPS: SvgProperties = {
   overlayText: "Placeholder",
   overlayTextColor: "#15162c",
   overlayTextAlignment: "center",
-  fontSize: 13,
+  fontSize: 14,
   fontWeight: "bold",
   fontFamily: "monospace",
 };
@@ -39,7 +41,11 @@ export function PlaceholderGenerator() {
     string | null
   >(null);
 
-  const [svgProps, setSvgProps] = useState<SvgProperties>(DEFAULT_SVG_PROPS);
+  const [svgProps, setSvgProps] = useState<SvgProperties>({
+    ...DEFAULT_SVG_PROPS,
+    overlayText: getRandomPlaceholder(),
+    backgroundPattern: getRandomSvgPattern(),
+  });
   const [svgHtml, setSvgHtml] = useState<string>("");
   const [base64Svg, setBase64Svg] = useState<string>("");
   const [isDirty, setIsDirty] = useState<boolean>(false);

@@ -1,38 +1,33 @@
 const DEFAULT_STROKE = "#8a72a1";
 const DEFAULT_FILL = "#705a86";
 
-type SVGPatternMap = Record<string, (stroke?: string, fill?: string) => string>;
+export type SVGPatternMap = Record<string, (stroke?: string, fill?: string) => string>;
 
 export const svgPatterns: SVGPatternMap = {
   dots: (stroke = DEFAULT_STROKE, fill = DEFAULT_FILL) => `
     <pattern id="dots" patternUnits="userSpaceOnUse" width="10" height="10">
-      <rect width="10" height="10" fill="${fill}10" />
-      <circle cx="5" cy="5" r="4" fill="${stroke}10" />
+       <circle cx="5" cy="5" r="4" fill="${stroke}10" />
     </pattern>`,
 
   checkered: (stroke = DEFAULT_STROKE, fill = DEFAULT_FILL) => `
     <pattern id="checkered" patternUnits="userSpaceOnUse" width="10" height="10">
-      <rect width="10" height="10" fill="${fill}" />
       <rect x="0" y="0" width="5" height="5" fill="${stroke}" />
       <rect x="5" y="5" width="5" height="5" fill="${stroke}" />
     </pattern>`,
 
   crosshatch: (stroke = DEFAULT_STROKE, fill = DEFAULT_FILL) => `
     <pattern id="crosshatch" patternUnits="userSpaceOnUse" width="10" height="10">
-      <rect width="10" height="10" fill="${fill}" />
       <line x1="0" y1="0" x2="10" y2="10" stroke="${stroke}" stroke-width="1" />
       <line x1="10" y1="0" x2="0" y2="10" stroke="${stroke}" stroke-width="1" />
     </pattern>`,
 
   circles: (stroke = DEFAULT_STROKE, fill = DEFAULT_FILL) => `
     <pattern id="circles" patternUnits="userSpaceOnUse" width="20" height="20">
-      <rect width="20" height="20" fill="${fill}" />
       <circle cx="10" cy="10" r="8" fill="none" stroke="${stroke}" stroke-width="1" />
     </pattern>`,
 
   bigCrosshatch: (stroke = DEFAULT_STROKE, fill = DEFAULT_FILL) => `
     <pattern id="bigCrosshatch" patternUnits="userSpaceOnUse" width="20" height="20">
-      <rect width="20" height="20" fill="${fill}" />
       <line x1="10" y1="10" x2="0" y2="0" stroke="${stroke}" stroke-width="1" />
       <line x1="10" y1="10" x2="20" y2="0" stroke="${stroke}" stroke-width="1" />
       <line x1="10" y1="10" x2="0" y2="20" stroke="${stroke}" stroke-width="1" />
