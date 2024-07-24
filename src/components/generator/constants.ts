@@ -56,9 +56,9 @@ export const svgPatterns: SVGPatternMap = {
 
   concentricCircles: (stroke = DEFAULT_STROKE, fill = DEFAULT_FILL) => `
     <pattern id="concentricCircles" patternUnits="userSpaceOnUse" width="60" height="60">
-      <circle cx="10" cy="10" r="2" fill="none" stroke="${stroke}" stroke-width="1" />
-      <circle cx="10" cy="10" r="6" fill="none" stroke="${stroke}" stroke-width="1" />
-      <circle cx="10" cy="10" r="10" fill="none" stroke="${stroke}" stroke-width="1" />
+      <circle cx="30" cy="30" r="2" fill="none" stroke="${stroke}" stroke-width="1" />
+      <circle cx="30" cy="30" r="6" fill="none" stroke="${stroke}" stroke-width="1" />
+      <circle cx="30" cy="30" r="10" fill="none" stroke="${stroke}" stroke-width="1" />
     </pattern>`,
 
   stripes: (stroke = DEFAULT_STROKE, fill = DEFAULT_FILL) => `
