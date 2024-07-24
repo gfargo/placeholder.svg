@@ -102,7 +102,7 @@ export const svgPatterns: SVGPatternMap = {
 
   diamondsGrid: (stroke = DEFAULT_STROKE, fill = DEFAULT_FILL) => `
     <pattern id="diamondsGrid" patternUnits="userSpaceOnUse" width="36" height="36">
-      <polygon points="5,0 10,5 5,10 0,5" fill="none" stroke="${stroke}" stroke-width="1" />
+      <polygon points="18,13 23,18 18,23 13,18" fill="none" stroke="${stroke}" stroke-width="1" />
     </pattern>`,
 
   chevrons: (stroke = DEFAULT_STROKE, fill = DEFAULT_FILL) => `
